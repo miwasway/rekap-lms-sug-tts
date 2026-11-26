@@ -828,8 +828,9 @@ function sSaran(){
 function sOutro(){
   return `<div class="sc"><div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center"><div>
    <div class="wipe" style="${D(.2)};width:900px;margin:0 auto;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);height:5px"></div>
-   <div class="serif rv" style="${D(.4)};font-size:88px;font-weight:600;margin-top:30px;line-height:1.05">Terima kasih,<br>Bapak dan Ibu Guru.</div>
-   <div class="rv" style="${D(1)};font-size:17px;color:var(--ink2);margin-top:26px;line-height:1.6">Sumber: Afresto LMS · presensi, jurnal, ATP/TP, pemantauan materi, latihan, dan tugas · periode 16–26 November 2026<br>Data diambil ${esc(EX.ksAt)} WITA. Data yang kosong belum tentu berarti buruk; bisa karena dinas luar atau keperluan lain.</div>
+   <div class="serif rv" style="${D(.4)};font-size:80px;font-weight:600;margin-top:30px;line-height:1.08">Terima kasih,<br>Bapak dan Ibu Guru.</div>
+   <div class="rv" style="${D(.9)};font-size:27px;color:var(--ink);margin:28px auto 0;line-height:1.55;max-width:1180px">Terima kasih telah menggunakan LMS Sekolah Unggul Garuda Timor Tengah Selatan sebagai ruang belajar bagi siswa sekaligus jembatan informasi bagi orang tua. Setiap jurnal, materi, dan nilai yang Bapak/Ibu bagikan membantu siswa belajar dan orang tua mengikuti perkembangan putra-putrinya.</div>
+   <div class="rv" style="${D(1.2)};font-size:16px;color:var(--ink2);margin-top:22px">Sumber: Afresto LMS · periode 16–26 November 2026 · data diambil ${esc(EX.ksAt)} WITA</div>
    <button class="rv" style="${D(1.4)};margin-top:34px;height:46px;padding:0 26px;font-size:16px;border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer" onclick="go(0)">↺ Putar dari awal</button></div></div></div>`;
 }
 
@@ -1153,6 +1154,47 @@ function aDisc(){
    </div></div></div>`;
 }
 
+// ---------- Akses orang tua (log aktivitas aplikasi orang tua, diambil 26 Nov 2026) ----------
+const ORT=(()=>{const K=[
+  {k:"X-A",tot:19,akt:17,rap:17,lihat:124,unduh:51,chat:0,hitung:1,lanjut:11,per:8},
+  {k:"X-B",tot:19,akt:18,rap:18,lihat:130,unduh:70,chat:2,hitung:0,lanjut:13,per:7},
+  {k:"X-C",tot:19,akt:17,rap:17,lihat:153,unduh:67,chat:1,hitung:0,lanjut:12,per:11},
+  {k:"X-D",tot:18,akt:18,rap:18,lihat:164,unduh:71,chat:2,hitung:1,lanjut:15,per:11}];
+  const S=f=>K.reduce((a,x)=>a+x[f],0);
+  const day=[["2026-10-29",3],["2026-10-30",657],["2026-10-31",25],["2026-11-01",16],["2026-11-02",11],["2026-11-03",15],["2026-11-04",5],["2026-11-05",4],["2026-11-06",11],["2026-11-07",3],["2026-11-08",0],["2026-11-09",0],["2026-11-10",3],["2026-11-11",3],["2026-11-12",2],["2026-11-13",22],["2026-11-14",3],["2026-11-15",4],["2026-11-16",8],["2026-11-17",14],["2026-11-18",11],["2026-11-19",29],["2026-11-20",3],["2026-11-21",12],["2026-11-22",9],["2026-11-23",3],["2026-11-24",8],["2026-11-25",6],["2026-11-26",0]];
+  return {K,tot:S("tot"),akt:S("akt"),per:S("per"),lanjut:S("lanjut"),lihat:S("lihat"),unduh:S("unduh"),chat:S("chat"),hitung:S("hitung"),day};})();
+function aOrtu(){
+  const O=ORT, C=["#37D3B9","#5B9BFF","#FFC53D","#FF7EB6"];
+  const top=[["Membuka rapor tengah semester",O.lihat,"#FFC53D"],["Mengunduh rapor",O.unduh,"#37D3B9"],["Mengirim pesan ke guru/sekolah",O.chat,"#5B9BFF"],["Latihan berhitung",O.hitung,"#FF7EB6"]];
+  const mx=top[0][1];
+  const cards=O.K.map((c,k)=>{const f=c.akt/c.tot, t=(1.0+k*.3).toFixed(2); return `<div class="k" data-a="rise" data-t="${t}" style="background:var(--card);border-radius:16px;padding:20px 22px;border-top:5px solid ${C[k]};display:flex;flex-direction:column;gap:10px">
+     <div style="display:flex;align-items:center;gap:16px">
+      <div style="position:relative;width:104px;height:104px;flex:none"><svg width="104" height="104"><circle cx="52" cy="52" r="44" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><path class="k" data-a="draw" data-t="${(+t+.3).toFixed(2)}" data-dur=".9" pathLength="1" d="${arc(52,52,44,f)}" stroke="${C[k]}" stroke-width="10" stroke-linecap="round" fill="none"/></svg>
+       <div style="position:absolute;inset:0;display:grid;place-items:center;font-size:${f>=.995?25:29}px;font-weight:800">${Math.round(f*100)}%</div></div>
+      <div><div class="D" style="font-size:44px;color:${C[k]};line-height:1">${c.k}</div><div style="font-size:21px;margin-top:6px"><b>${c.akt}</b> dari ${c.tot} orang tua</div></div></div>
+     <div style="font-size:22px;line-height:1.45;color:var(--ink2);margin-top:6px">Membuka rapor <b style="color:var(--ink)">${c.lihat}×</b> · mengunduh <b style="color:var(--ink)">${c.unduh}×</b>${c.chat?` · pesan <b style="color:var(--ink)">${c.chat}</b>`:""}</div>
+     <div style="font-size:21px;line-height:1.45;color:var(--ink2);border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:auto">Aktif lagi setelah rapor dibagikan: <b style="color:var(--ink);font-size:24px">${c.lanjut}</b><br>Aktif 16–26 Nov: <b style="color:var(--ink);font-size:24px">${c.per}</b></div></div>`;}).join("");
+  const BW=16, H=170, mxd=60;
+  const bars=O.day.map((d,i)=>{const v=d[1], h=Math.max(v?4:0,Math.min(H,v/mxd*H)), inP=d[0]>="2026-11-16"; return `<i class="k" data-a="growy" data-t="${(2.6+i*.03).toFixed(2)}" style="display:block;width:${BW}px;height:${h}px;border-radius:3px;background:${v>mxd?"#FFC53D":inP?"#37D3B9":"#5B6B8C"}"></i>`;}).join("");
+  const W=O.day.length*(BW+5);
+  return `<div class="sc"><div class="pgw">
+   <div class="sec"><span class="kick rv" style="${D(.15)}">Aplikasi orang tua</span><span class="r rv" style="${D(.25)}">Sejak aplikasi dipakai · 29 Okt – 26 Nov 2026</span></div>
+   <h2 class="hd rv" style="${D(.35)};font-size:46px"><span style="color:var(--sun)">${O.akt} dari ${O.tot}</span> orang tua sudah membuka aplikasi orang tua</h2>
+   <p class="dk rv" style="${D(.55)};font-size:21px">Yang paling sering dibuka adalah rapor tengah semester. Sebanyak ${O.lanjut} orang tua kembali membuka aplikasi setelah rapor dibagikan, dan ${O.per} orang tua aktif selama 16–26 November.</p>
+   <div class="bd" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px;margin-top:4px">${cards}</div>
+   <div style="display:grid;grid-template-columns:1.05fr 1fr;gap:30px;margin-top:20px;flex:none">
+    <div class="k" data-a="rise" data-t="2.2" style="background:var(--card);border-radius:16px;padding:18px 24px">
+     <div style="font-size:16px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9FB0C8;margin-bottom:12px">Paling sering dibuka</div>
+     ${top.map((r,k)=>`<div style="display:grid;grid-template-columns:330px 1fr 64px;align-items:center;gap:14px;margin:9px 0"><span style="font-size:20px">${r[0]}</span><span style="height:14px;background:rgba(255,255,255,.08);border-radius:7px;overflow:hidden"><i class="gx" style="${D(2.5+k*.15)};display:block;height:100%;width:${Math.max(1.5,r[1]/mx*100)}%;background:${r[2]};border-radius:7px"></i></span><b class="num" style="font-size:24px;text-align:right;color:${r[2]}">${r[1]}</b></div>`).join("")}</div>
+    <div class="k" data-a="rise" data-t="2.4" style="background:var(--card);border-radius:16px;padding:18px 24px">
+     <div style="font-size:16px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9FB0C8;margin-bottom:10px">Aktivitas orang tua per hari</div>
+     <div style="position:relative;height:${H}px;display:flex;align-items:flex-end;gap:5px">${bars}
+      <div class="k" data-a="fade" data-t="3.6" style="position:absolute;left:${1*(BW+5)+22}px;top:-4px;font-size:17px;color:#FFC53D">← 30 Okt · rapor dibagikan (657 aktivitas)</div></div>
+     <div style="display:flex;justify-content:space-between;font-size:14px;color:#8E9CB8;margin-top:6px;width:${W}px"><span>29 Okt</span><span style="color:#37D3B9">16–26 Nov</span><span>26 Nov</span></div></div>
+   </div></div>
+   <div class="srcl rv" style="${D(2.8)}">Sumber: log aktivitas akun orang tua di LMS (tidak termasuk akun kelas uji coba). Log mencatat akses rapor, pesan, dan latihan berhitung.</div></div>`;
+}
+
 // ===== Uji coba A · animated-infographic (iart-ai/data-animation-skills) =====
 // Prinsip skill: desain bingkai statis dulu; urutan muncul = hierarki (judul → ikon → angka → label → penghubung);
 // satu angka bergerak pada satu waktu; semua gerak adalah fungsi murni dari waktu adegan (bisa digeser/scrub); akhir adegan ditahan diam.
@@ -1260,12 +1302,12 @@ function a3(){
 // ===== Versi gabungan A + B: infografis (A) dalam bahasa sinematik HyperFrames (B), digerakkan timeline GSAP =====
 // ---------- B · pembuka: satu angka pada satu waktu ----------
 function abOpen(){
-  const N=[[P.pct,"%","kehadiran guru",`rata-rata ${P.perDay} dari ${G.length} guru presensi setiap hari`,"var(--tealL)"],[J.sudah,`/${J.base}`,"sesi mengajar sudah diisi jurnalnya",`${J.pct}% dari ${J.base} sesi wajib isi${J.belum?` · ${J.belum} sesi yang belum diisi tidak dihitung`:""}`,"var(--skyL)"],[ksPct,"%","kehadiran siswa",`siswa yang hadir, dihitung dari ${KSQ.rec.length} sesi yang sudah diabsen guru`,"var(--vioL)"],[TGX().pct,"%","siswa sasaran sudah mengumpulkan tugas",`${TGX().got} dari ${TGX().exp} pengumpulan · ${TGX().nT} tugas dari ${TGL_.length} guru`,"var(--coral)"]];
+  const N=[[P.pct,"%","kehadiran guru",`rata-rata ${P.perDay} dari ${G.length} guru presensi setiap hari`,"var(--tealL)"],[J.sudah,`/${J.base}`,"sesi mengajar sudah diisi jurnalnya",`${J.pct}% dari ${J.base} sesi wajib isi${J.belum?` · ${J.belum} sesi yang belum diisi tidak dihitung`:""}`,"var(--skyL)"],[ksPct,"%","kehadiran siswa",`siswa yang hadir, dihitung dari ${KSQ.rec.length} sesi yang sudah diabsen guru`,"var(--vioL)"],[TGX().pct,"%","siswa sasaran sudah mengumpulkan tugas",`${TGX().got} dari ${TGX().exp} pengumpulan · ${TGX().nT} tugas dari ${TGL_.length} guru`,"var(--coral)"],[ORT.akt,`/${ORT.tot}`,"orang tua sudah membuka aplikasi orang tua",`paling sering untuk membuka dan mengunduh rapor · ${ORT.per} orang tua aktif selama 16–26 Nov`,"var(--sun)"]];
   const strip=G.filter(g=>g.best!=null&&PH[g.best]);
   return `<div class="sc">
    <div class="k" data-a="fade" data-t="0" style="position:absolute;left:80px;top:60px;font-size:15px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#9FB0C8">SMA Unggul Garuda TTS · Senin 16 – Kamis 26 November 2026</div>
    <div class="k D" data-a="blur" data-t=".15" data-out="1.7" style="position:absolute;left:0;right:0;top:290px;text-align:center;font-size:170px;text-transform:uppercase">Sembilan hari <span style="color:var(--sun)">LMS</span><div style="font-family:Inter;font-size:30px;font-weight:600;text-transform:none;letter-spacing:0;color:#C6D0E0;margin-top:22px">Rekap aktivitas ${G.length} guru di LMS</div></div>
-   ${N.map((n,k)=>{const s=1.95+k*1.65; return `<div class="k" data-a="blur" data-t="${s.toFixed(2)}" ${k<3?`data-out="${(s+1.5).toFixed(2)}"`:""} style="position:absolute;left:0;right:0;top:190px;text-align:center">
+   ${N.map((n,k)=>{const s=1.95+k*1.65; return `<div class="k" data-a="blur" data-t="${s.toFixed(2)}" ${k<N.length-1?`data-out="${(s+1.5).toFixed(2)}"`:""} style="position:absolute;left:0;right:0;top:190px;text-align:center">
      <div class="D" style="font-size:290px;color:${n[4]}"><span class="k" data-a="cnt" data-t="${s.toFixed(2)}" data-v="${n[0]}" data-suf="">0</span><span style="font-size:${n[1].length>1?140:190}px;color:${n[1].length>1?"#7C8AA8":n[4]}">${n[1]}</span></div>
      <div style="font-size:46px;font-weight:800;margin-top:18px">${n[2]}</div><div style="font-size:24px;color:#9FB0C8;margin-top:8px">${n[3]}</div></div>`;}).join("")}
    <div class="k" data-a="fade" data-t="1.9" style="position:absolute;left:0;right:0;bottom:150px;display:flex;justify-content:center;gap:12px">${N.map((n,k)=>`<i class="k" data-a="pop" data-t="${(1.95+k*1.65).toFixed(2)}" style="width:44px;height:12px;border-radius:6px;background:${n[4]}"></i>`).join("")}</div>
@@ -1334,7 +1376,7 @@ function buildTL(sc){
 // ---------- bab & halaman ----------
 const CH=[], S=[];
 function addCh(title,sub,g,list){CH.push({title,sub,g,start:S.length,len:list.length}); list.forEach(s=>S.push({...s,ch:CH.length-1}));}
-addCh("Rekap sekolah","21 halaman",null,[{f:abOpen,t:9,n:"Pembuka"},{f:aDisc,t:14,n:"Catatan pembacaan data"},{f:a2,t:14,n:"Kehadiran guru"},{f:sGrid,t:14,n:"Pola kehadiran"},
+addCh("Rekap sekolah","22 halaman",null,[{f:abOpen,t:11,n:"Pembuka"},{f:aOrtu,t:14,n:"Akses orang tua"},{f:aDisc,t:14,n:"Catatan pembacaan data"},{f:a2,t:14,n:"Kehadiran guru"},{f:sGrid,t:14,n:"Pola kehadiran"},
  {f:a3,t:21,n:"Alur jurnal"},{f:s3,t:15,n:"Ketertiban jurnal"},{f:sFoto,t:15,n:"Dokumentasi kelas"},{f:sTP,t:13,n:"Capaian TP"},{f:sKon,t:13,n:"Keterhubungan"},{f:sKelas,t:13,n:"Dampak ke kelas"},{f:sSiswa,t:14,n:"Siswa yang terhubung"},
  {f:sSumGuru,t:12,n:"Sumatif"},{f:sJuara,t:14,n:"Nilai sumatif tertinggi"},{f:sTugas,t:13,n:"Penugasan"},{f:sHasil,t:17,n:"Hasil tugas siswa"},{f:sDevice,t:12,n:"Perangkat dan akses"},
  {f:sKS,t:15,n:"Kehadiran siswa"},{f:sKSJam,t:15,n:"Jam absen per kelas"},{f:sAbsen,t:14,n:"Absen jam pertama"},{f:sSorot,t:14,n:"Sorotan"},{f:sIndex,t:13,n:"Daftar guru"}]);
