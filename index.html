@@ -1162,7 +1162,7 @@ const ORT=(()=>{const K=[
   {k:"X-D",tot:18,akt:18,rap:18,lihat:164,unduh:71,chat:2,hitung:1,lanjut:15,per:11}];
   const S=f=>K.reduce((a,x)=>a+x[f],0);
   const day=[["2026-10-29",3],["2026-10-30",657],["2026-10-31",25],["2026-11-01",16],["2026-11-02",11],["2026-11-03",15],["2026-11-04",5],["2026-11-05",4],["2026-11-06",11],["2026-11-07",3],["2026-11-08",0],["2026-11-09",0],["2026-11-10",3],["2026-11-11",3],["2026-11-12",2],["2026-11-13",22],["2026-11-14",3],["2026-11-15",4],["2026-11-16",8],["2026-11-17",14],["2026-11-18",11],["2026-11-19",29],["2026-11-20",3],["2026-11-21",12],["2026-11-22",9],["2026-11-23",3],["2026-11-24",8],["2026-11-25",6],["2026-11-26",0]];
-  const dd={days:["2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20","2026-11-21","2026-11-22","2026-11-23","2026-11-24","2026-11-25","2026-11-26"],c:{"X-A":[0,1,1,6,1,1,0,0,1,0,0],"X-B":[2,2,2,2,0,0,0,0,1,1,0],"X-C":[2,3,4,2,0,3,2,0,4,1,0],"X-D":[2,2,3,5,2,2,3,1,1,3,0]}};
+  const dd={days:["2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20","2026-11-21","2026-11-22","2026-11-23","2026-11-24","2026-11-25","2026-11-26"],c:{"X-A":[0,1,1,16,1,1,0,0,2,0,0],"X-B":[2,3,4,2,0,0,0,0,1,1,0],"X-C":[4,5,4,3,0,6,3,0,6,1,0],"X-D":[4,2,4,9,2,2,9,1,1,4,0]}};
   return {dd,K,tot:S("tot"),akt:S("akt"),per:S("per"),lanjut:S("lanjut"),lihat:S("lihat"),unduh:S("unduh"),chat:S("chat"),hitung:S("hitung"),day};})();
 function aOrtu(){
   const O=ORT, C=["#37D3B9","#5B9BFF","#FFC53D","#FF7EB6"], DD=O.dd, n=DD.days.length;
@@ -1172,10 +1172,10 @@ function aOrtu(){
        <div style="position:absolute;inset:0;display:grid;place-items:center;font-size:${f>=.995?22:25}px;font-weight:800">${Math.round(f*100)}%</div></div>
       <div style="white-space:nowrap"><div style="display:flex;align-items:baseline;gap:10px"><span class="D" style="font-size:38px;color:${C[k]};line-height:1">${c.k}</span><span style="font-size:18px;color:var(--ink2)">${c.akt}/${c.tot} orang tua</span></div>
        <div style="font-size:19px;margin-top:8px">Aktif 16–26 Nov: <b style="font-size:26px;color:${C[k]}">${c.per}</b></div></div></div>`;}).join("");
-  const CH=360, U=CH/mx, COLW=96, BW=58;
+  const CH=320, U=CH/mx, COLW=96, BW=58;
   const DN=["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
   const cols=DD.days.map((d,i)=>{const dt=new Date(d+"T00:00:00"), lib=dt.getDay()===0, t=1.8+i*.12; let segs="";
-    O.K.forEach((c,k)=>{const v=DD.c[c.k][i]; if(!v)return; segs+=`<div style="height:${v*U}px;background:${C[k]};border-top:1px solid rgba(15,26,51,.35);display:grid;place-items:center;font-size:${v*U>=20?16:12}px;font-weight:800;color:#0F1A33">${v*U>=16?v:""}</div>`;});
+    O.K.forEach((c,k)=>{const v=DD.c[c.k][i]; if(!v)return; segs+=`<div style="height:${v*U}px;background:${C[k]};border-top:1px solid rgba(15,26,51,.35);display:grid;place-items:center;font-size:${v*U>=20?16:12}px;font-weight:800;color:#0F1A33">${v*U>=14?v:""}</div>`;});
     return `<div style="width:${COLW}px;display:flex;flex-direction:column;align-items:center">
       <div style="height:${CH+40}px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center">
        <div class="k" data-a="fade" data-t="${(t+.35).toFixed(2)}" style="font-size:26px;font-weight:800;margin-bottom:6px;color:${dayTot[i]?"var(--ink)":"#6F819C"}">${dayTot[i]}</div>
@@ -1184,15 +1184,15 @@ function aOrtu(){
       <div style="font-size:14px;color:${lib?"#FF7EB6":"#8E9CB8"}">${DN[dt.getDay()]}</div></div>`;}).join("");
   return `<div class="sc"><div class="pgw">
    <div class="sec"><span class="kick rv" style="${D(.15)}">Aplikasi orang tua</span><span class="r rv" style="${D(.25)}">Senin 16 – Kamis 26 November 2026</span></div>
-   <h2 class="hd rv" style="${D(.35)};font-size:44px"><span style="color:var(--sun)">${O.akt} dari ${O.tot}</span> orang tua sudah membuka aplikasi orang tua</h2>
-   <p class="dk rv" style="${D(.55)};font-size:20px;line-height:1.5">Setelah rapor tengah semester dibagikan, orang tua tetap membuka aplikasi untuk mengikuti perkembangan putra-putrinya: materi yang dipelajari, penugasan, serta nilai latihan dan asesmen yang dikerjakan anak. Selama 16–26 November, <b>${O.per} orang tua</b> membuka aplikasi.</p>
+   <h2 class="hd rv" style="${D(.35)};font-size:50px"><span style="color:var(--sun)">${O.akt} dari ${O.tot}</span> orang tua siap memantau melalui aplikasi</h2>
+   <p class="dk rv" style="${D(.55)};font-size:21px;line-height:1.5">Setelah rapor tengah semester, orang tua tetap mengikuti perkembangan putra-putrinya melalui aplikasi. Artinya, <b style="color:var(--sun)">setiap materi, tugas, dan nilai yang Bapak/Ibu bagikan di LMS dapat langsung dilihat oleh hampir semua orang tua.</b> Semakin banyak yang dibagikan, semakin banyak alasan bagi orang tua untuk membuka aplikasi setiap hari.</p>
    <div class="bd" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:2px;flex:none">${cards}</div>
    <div class="k" data-a="rise" data-t="1.6" style="background:var(--card);border-radius:16px;padding:16px 26px 14px;margin-top:16px;flex:1;display:flex;flex-direction:column">
-    <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:17px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9FB0C8">Jumlah orang tua yang membuka aplikasi setiap hari</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:17px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9FB0C8">Aktivitas orang tua di aplikasi setiap hari · ${dayTot.reduce((a,b)=>a+b,0)} aktivitas dari ${O.per} orang tua</div>
      <div style="display:flex;gap:18px;font-size:16px">${O.K.map((c,k)=>`<span style="display:flex;gap:7px;align-items:center"><i style="width:14px;height:14px;border-radius:3px;background:${C[k]}"></i>${c.k}</span>`).join("")}</div></div>
     <div style="display:flex;justify-content:space-between;margin-top:auto">${cols}</div></div>
    </div>
-   <div class="srcl rv" style="${D(2.8)}">Satu orang tua dihitung satu kali per hari (tanpa percobaan masuk yang gagal). Sumber: log aktivitas akun orang tua di LMS, tidak termasuk akun kelas uji coba.</div></div>`;
+   <div class="srcl rv" style="${D(2.8)}">Aktivitas = masuk ke aplikasi, membuka atau mengunduh rapor, mengirim pesan, dan latihan berhitung (tanpa percobaan masuk yang gagal). Sumber: log aktivitas akun orang tua di LMS, tidak termasuk akun kelas uji coba.</div></div>`;
 }
 
 // ===== Uji coba A · animated-infographic (iart-ai/data-animation-skills) =====
