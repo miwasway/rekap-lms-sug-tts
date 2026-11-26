@@ -887,7 +887,8 @@ function sSiswa(){
   return page({k:"03 · Siswa yang terhubung",h:`${mk(T.aktif+" dari "+T.n+" siswa")} sudah berinteraksi dengan guru melalui LMS`,
    dk:`<b style="color:${FC.mat}">${T.baca} siswa membaca materi</b> · <b style="color:#37D3B9">${T.kum} mengumpulkan tugas</b> · <b style="color:${GOLD}">${T.sum} mengerjakan sumatif</b> (${T.s85} bernilai ≥ 85) · <b style="color:#FF7EB6">${T.kom} menanggapi materi, ${T.ai} bertanya ke AI</b>`,
    b:`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
-    ${col(.9,GOLD,"Nilai bagus lintas mapel","Jumlah nilai semua ulangan sumatif yang diikuti",EX.sumS.slice(0,5),r=>[r[2],esc(r[3])])}
+    ${(()=>{const R=EX.sumS.map(r=>{const P=r[3].split(" · ").map(x=>{const m=x.match(/^(.*) (\d+)$/);return [m[1],+m[2]];}); const mx=Math.max(...P.map(x=>x[1])); return [r[0],r[1],mx,P.map(x=>x[1]===mx?`<b style="color:${GOLD}">${esc(x[0])} ${x[1]}</b>`:`${esc(x[0])} ${x[1]}`).join(" · "),r[2]];}).sort((a,b)=>b[2]-a[2]||b[4]-a[4]);
+      return col(.9,GOLD,"Nilai bagus lintas mapel","Nilai sumatif tertinggi dari mapel yang diikuti (kuning)",R.slice(0,5),r=>[r[2],r[3]]);})()}
     ${col(1.1,"#FF7EB6","Menanggapi materi","Komentar dan pertanyaan ke AI",EX.kom.slice(0,5),r=>[`${r[2]}<span style="font-size:13px;color:var(--mute)"> kom</span> ${r[3]}<span style="font-size:13px;color:var(--mute)"> AI</span>`,""])}
     ${col(1.3,"#37D3B9","Rajin mengumpulkan tugas","Jumlah tugas yang dikumpulkan",EX.kum.slice(0,5),r=>[r[2]+"×",""])}
     ${col(1.5,FC.mat,"Paling aktif membaca","Materi dibaca, tugas, dan latihan",EX.top.slice(0,5),r=>[r[2],`${r[5]} tugas · ${r[6]} latihan`])}
@@ -1259,7 +1260,7 @@ function a3(){
 // ===== Versi gabungan A + B: infografis (A) dalam bahasa sinematik HyperFrames (B), digerakkan timeline GSAP =====
 // ---------- B · pembuka: satu angka pada satu waktu ----------
 function abOpen(){
-  const N=[[P.pct,"%","kehadiran guru",`rata-rata ${P.perDay} dari ${G.length} guru presensi setiap hari`,"var(--tealL)"],[J.sudah,`/${J.base}`,"sesi mengajar sudah diisi jurnalnya",`${J.pct}% dari ${J.base} sesi wajib isi · ${J.belum} sesi Jumat yang belum diisi tidak dihitung`,"var(--skyL)"],[ksPct,"%","kehadiran siswa",`siswa yang hadir, dihitung dari ${KSQ.rec.length} sesi yang sudah diabsen guru`,"var(--vioL)"],[TGX().pct,"%","siswa sasaran sudah mengumpulkan tugas",`${TGX().got} dari ${TGX().exp} pengumpulan · ${TGX().nT} tugas dari ${TGL_.length} guru`,"var(--coral)"]];
+  const N=[[P.pct,"%","kehadiran guru",`rata-rata ${P.perDay} dari ${G.length} guru presensi setiap hari`,"var(--tealL)"],[J.sudah,`/${J.base}`,"sesi mengajar sudah diisi jurnalnya",`${J.pct}% dari ${J.base} sesi wajib isi${J.belum?` · ${J.belum} sesi yang belum diisi tidak dihitung`:""}`,"var(--skyL)"],[ksPct,"%","kehadiran siswa",`siswa yang hadir, dihitung dari ${KSQ.rec.length} sesi yang sudah diabsen guru`,"var(--vioL)"],[TGX().pct,"%","siswa sasaran sudah mengumpulkan tugas",`${TGX().got} dari ${TGX().exp} pengumpulan · ${TGX().nT} tugas dari ${TGL_.length} guru`,"var(--coral)"]];
   const strip=G.filter(g=>g.best!=null&&PH[g.best]);
   return `<div class="sc">
    <div class="k" data-a="fade" data-t="0" style="position:absolute;left:80px;top:60px;font-size:15px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#9FB0C8">SMA Unggul Garuda TTS · Senin 16 – Kamis 26 November 2026</div>
